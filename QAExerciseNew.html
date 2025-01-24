@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Exercise - Contact Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header img {
+            height: 50px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .link-container {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .link-container a {
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #007bff;
+            cursor: pointer;
+            border: 2px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .link-container a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .form-container {
+            display: none;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input {
+            width: 50%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container input ~ input {
+            width: 100%;
+        }
+
+        .form-container .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .form-container button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .weirdPosition {
+            display: flex;
+            margin-top: -20px;
+            margin-left: 300px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://via.placeholder.com/150x50?text=QA+Exercise" alt="QA Exercise Logo">
+        <h1>QA Exercise</h1>
+    </header>
+
+    <div class="link-container">
+        <a onclick="showForm()">Open Contact Form</a>
+    </div>
+
+    <div class="form-container" id="contactForm">
+        <form id="form">
+            <label for="name">Name*</label>
+            <input type="text" id="name" name="name" >
+            <div id="nameError" class="error-message"></div>
+
+            <label for="email">Email*</label>
+            <input type="email" id="email" name="email" >
+            <div id="emailError" class="error-message"></div>
+
+            <label for="company">Compny Name*</label>
+            <input type="text" id="company" name="company" >
+            <div id="companyError" class="error-message"></div>
+
+            <label for="dob">Date of Birth*</label>
+            <input type="date" id="dob" name="dob" >
+            <div id="dobError" class="error-message"></div>
+
+            <label for="contactMethod">How would you like to be contracted?</label>
+            <select id="contactMethod" name="contactMethod">
+                <option value="email">Email</option>
+                <option value=""> </option>
+                <option value="phone">Phone</option>
+                <option value="post">Post</option>
+            </select>
+
+            <div class="phone-fields" id="phoneFields">
+                <label for="landline">Code Number*</label>
+                <input type="text" id="landline" name="landline" >
+                <div id="landlineError" class="error-message"></div>
+    
+                <label for="mobile">Mobile Number</label>
+                <input type="text" id="mobile" name="mobile">
+                <div id="mobileError" class="error-message"></div>
+        
+            </div>
+            <div class="address-fields" id="addressFields">
+                <label for="addressLine1">Adress Line 1*</label>
+                <input type="text" id="addressLine1" name="addressLine1">
+                <div id="addressLine1Error" class="error-message"></div>
+
+                <label for="addressLine2">Address Line</label>
+                <input type="text" id="addressLine2" name="addressLine2">
+
+                <label for="city">City*</label>
+                <input type="text" id="city" name="city">
+                <div id="cityError" class="error-message"></div>
+
+                <label for="postcode">Postcode</label>
+                <input type="text" id="postcode" name="postcode">
+                <div id="postcodeError" class="error-message"></div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 QA Exercise. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        function showForm() {
+    document.getElementById('contactForm').style.display = 'block';
+	      document.getElementById('addressFields').style.display = 'none'; // Hide address fields after reset
+	      document.getElementById('phoneFields').style.display = 'none'; // Hide address fields after reset
+ 
+}
+
+document.getElementById('contactMethod').addEventListener('change', function () {
+    const addressFields = document.getElementById('addressFields');
+    const phoneFields = document.getElementById('phoneFields');
+    if (this.value === 'post') {
+        addressFields.style.display = 'block';
+        phoneFields.style.display = 'none';
+        this.classList.add('weirdPosition');
+      } 
+    else if (this.value === 'phone') {
+        phoneFields.style.display = 'block';
+        addressFields.style.display = 'none';
+        this.classList.add('weirdPosition');       
+    }
+    else {
+        addressFields.style.display = 'none';
+        phoneFields.style.display = 'none';
+        this.classList.remove('weirdPosition');
+     }
+});
+
+document.getElementById('form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Clear all previous error messages
+    document.querySelectorAll('.error-message').forEach(function (el) {
+        el.textContent = '';
+    });
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const landline = document.getElementById('landline').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const dob = document.getElementById('dob').value;
+    const contactMethod = document.getElementById('contactMethod').value;
+    const addressLine1 = document.getElementById('addressLine1').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const postcode = document.getElementById('postcode').value.trim();
+
+    let hasError = false;
+
+    // Name validation
+    if (!name) {
+        document.getElementById('nameError').textContent = 'Name is required.';
+        hasError = true;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        document.getElementById('emailError').textContent = 'Valid email is required.';
+        hasError = true;
+    }
+
+    if (contactMethod === 'phone') {
+        // Landline validation (UK format)
+        const landlineRegex = /^0[1-9]\d{8,9}$/;
+        if (!landline || !landlineRegex.test(landline)) {
+            document.getElementById('landlineError').textContent = 'Valid UK landline is required.';
+            hasError = true;
+        }
+
+        // Mobile validation (UK format)
+        const mobileRegex = /^07\d{9}$/;
+        if (!mobile || !mobileRegex.test(mobile)) {
+            document.getElementById('mobileError').textContent = 'Valid UK mobile number is required.';
+            hasError = true;
+        }
+    }
+
+    // Company validation
+    if (!company) {
+        document.getElementById('companyError').textContent = 'Company name is required.';
+        hasError = true;
+    }
+
+    // Date of Birth validation
+    const dobDate = new Date(dob);
+    const currentDate = new Date();
+    const minDate = new Date(currentDate.getFullYear() - 80, currentDate.getMonth(), currentDate.getDate());
+    if (!dob || dobDate > currentDate || dobDate < minDate) {
+        document.getElementById('dobError').textContent = 'Enter a valid date of birth (within the last 80 years).';
+        hasError = true;
+    }
+
+    // Address validation if "Post" is selected
+    if (contactMethod === 'post') {
+        if (!addressLine1) {
+            document.getElementById('addressLine1Error').textContent = 'Address Line 1 is required.';
+            hasError = true;
+        }
+        if (!city) {
+            document.getElementById('cityError').textContent = 'City is required.';
+            hasError = true;
+        }
+        if (!postcode) {
+            document.getElementById('postcodeError').textContent = 'Postcode is required.';
+            hasError = true;
+        }
+    }
+
+    // If no errors, display success message
+    if (!hasError) {
+        toastr.success('Form submitted successfully. You will hear a response in the next 3-5 working days.');
+        document.getElementById('form').reset();
+        document.getElementById('addressFields').style.display = 'none'; // Hide address fields after reset
+    }
+});
+
+    </script>
+</body>
+</html>
