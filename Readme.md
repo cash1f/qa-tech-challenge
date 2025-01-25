@@ -1,5 +1,5 @@
 # Accredit Solutions - QA Tech Challenge
-## Submitted by Syed Haider
+## By Syed Haider
 
 This guide explains how to set up and execute the test suite which uses Playwright (JavaScript)
 
